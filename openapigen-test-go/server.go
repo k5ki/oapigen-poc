@@ -27,3 +27,14 @@ func (s *Server) GetUser(ctx context.Context, req api.GetUserRequestObject) (api
 		},
 	), nil
 }
+
+func (s *Server) CreateUser(ctx context.Context, req api.CreateUserRequestObject) (api.CreateUserResponseObject, error) {
+	return api.CreateUser200JSONResponse(
+		api.User{
+			Id:        Some(types.UUID(uuid.MustParse("fd6944af-e7e4-4e35-9a45-43c57b7a648a"))),
+			Name:      Some("Jacque Yue"),
+			CreatedAt: Some(time.Now()),
+			UpdatedAt: Some(time.Now()),
+		},
+	), nil
+}

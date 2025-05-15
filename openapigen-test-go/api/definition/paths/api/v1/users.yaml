@@ -1,15 +1,13 @@
-get:
-  summary: Get user
+post:
+  summary: Create user
   description: aaaaaaaaa
-  operationId: get_user
-  parameters:
-    - in: path
-      name: userId
-      schema:
-        type: string
-        format: uuid
-      required: true
-      description: User ID
+  operationId: create_user
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../../openapi.yaml#/components/schemas/User"
+          required: ["name"]
   responses:
     200:
       description: OK

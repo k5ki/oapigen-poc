@@ -7,8 +7,10 @@ info:
 servers:
   - url: "http://localhost:8089"
 paths:
-  /api/v1/users/{userId}:
+  /api/v1/users:
     $ref: "./paths/api/v1/users.yaml"
+  /api/v1/users/{userId}:
+    $ref: "./paths/api/v1/user.yaml"
 components:
   schemas:
     User:

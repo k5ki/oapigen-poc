@@ -17,6 +17,9 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Create user
+	// (POST /api/v1/users)
+	CreateUser(ctx echo.Context) error
 	// Get user
 	// (GET /api/v1/users/{userId})
 	GetUser(ctx echo.Context, userId openapi_types.UUID) error
@@ -25,6 +28,15 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// CreateUser converts echo context to params.
+func (w *ServerInterfaceWrapper) CreateUser(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.CreateUser(ctx)
+	return err
 }
 
 // GetUser converts echo context to params.
@@ -71,8 +83,26 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.POST(baseURL+"/api/v1/users", wrapper.CreateUser)
 	router.GET(baseURL+"/api/v1/users/:userId", wrapper.GetUser)
 
+}
+
+type CreateUserRequestObject struct {
+	Body *CreateUserJSONRequestBody
+}
+
+type CreateUserResponseObject interface {
+	VisitCreateUserResponse(w http.ResponseWriter) error
+}
+
+type CreateUser200JSONResponse User
+
+func (response CreateUser200JSONResponse) VisitCreateUserResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 type GetUserRequestObject struct {
@@ -94,6 +124,9 @@ func (response GetUser200JSONResponse) VisitGetUserResponse(w http.ResponseWrite
 
 // StrictServerInterface represents all server handlers.
 type StrictServerInterface interface {
+	// Create user
+	// (POST /api/v1/users)
+	CreateUser(ctx context.Context, request CreateUserRequestObject) (CreateUserResponseObject, error)
 	// Get user
 	// (GET /api/v1/users/{userId})
 	GetUser(ctx context.Context, request GetUserRequestObject) (GetUserResponseObject, error)
@@ -109,6 +142,35 @@ func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareF
 type strictHandler struct {
 	ssi         StrictServerInterface
 	middlewares []StrictMiddlewareFunc
+}
+
+// CreateUser operation middleware
+func (sh *strictHandler) CreateUser(ctx echo.Context) error {
+	var request CreateUserRequestObject
+
+	var body CreateUserJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateUser(ctx.Request().Context(), request.(CreateUserRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateUser")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(CreateUserResponseObject); ok {
+		return validResponse.VisitCreateUserResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
 }
 
 // GetUser operation middleware

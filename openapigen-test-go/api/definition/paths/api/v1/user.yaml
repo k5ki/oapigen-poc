@@ -1,0 +1,19 @@
+get:
+  summary: Get user
+  description: aaaaaaaaa
+  operationId: get_user
+  parameters:
+    - in: path
+      name: userId
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: User ID
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "../../../openapi.yaml#/components/schemas/User"
