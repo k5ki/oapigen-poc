@@ -9,6 +9,8 @@ properties:
     type: string
     description: User name
     example: Jacque Yue
+  info:
+    $ref: "../openapi.yaml#/components/schemas/UserInfo"
   created_at:
     type: string
     description: CreatedAt

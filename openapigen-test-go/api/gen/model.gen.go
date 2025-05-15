@@ -23,7 +23,8 @@ type User struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// Id User ID
-	Id *openapi_types.UUID `json:"id,omitempty"`
+	Id   *openapi_types.UUID `json:"id,omitempty"`
+	Info *UserInfo           `json:"info,omitempty"`
 
 	// Name User name
 	Name *string `json:"name,omitempty"`
@@ -32,21 +33,44 @@ type User struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
+// UserInfo defines model for userInfo.
+type UserInfo struct {
+	// Tel Telephone number
+	Tel *string `json:"tel,omitempty"`
+}
+
+// CreateUserJSONBody defines parameters for CreateUser.
+type CreateUserJSONBody struct {
+	// CreatedAt CreatedAt
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// Id User ID
+	Id   *openapi_types.UUID `json:"id,omitempty"`
+	Info interface{}         `json:"info"`
+
+	// Name User name
+	Name string `json:"name"`
+
+	// UpdatedAt UpdatedAt
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+}
+
 // CreateUserJSONRequestBody defines body for CreateUser for application/json ContentType.
-type CreateUserJSONRequestBody = User
+type CreateUserJSONRequestBody CreateUserJSONBody
 
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-	"H4sIAAAAAAAC/8xTTW8TMRD9K9HAcTfr/Uia+MaHVAUOXOgBUIWc9SRxlbVdexwRRfvfkZ2PpjQRQgKJ",
-	"vaw9Hr838+Z5B63prNGoyQPfgW9X2Im0DB5d/FtnLDpSmKKtQ0EovwuKO4m+dcqSMho4vNufvSHIAH+I",
-	"zq4ROFSsGuWszFn1mdWcNZyNhuObyZSVVd18hQwWxnURDqQgzEl1CBnQ1sbLnpzSS+gzUPIl4Z1HN5i9",
-	"f0ZXVjU2o/FNjpPpPC8rWeeiGY3zphqPy6a8aRhj56QhKHmJT4sOrzCmo3POD6J9DDj4Ei5WHqy8Ktnd",
-	"/uxfSNafImb+gC1BH0NKL8zLMnCj9HJlgk84ilIVC2PmwkEGG3R+n1cOWezIWNTCKuBQD9mwhgysoFXy",
-	"RyGsKjZlEd2TAtb4C32L4wcJzYkYn8mTiaLOkIHDx4Ce3hq5TeYzmlAnOGHtWrXpWvHgI+bRvHH12uEC",
-	"OLwqntxdHKydKota9BHeW6P93tkVY3+dI/ul7U8f01x86DrhtqduB4f87Ll8xS7+ZrKPdEv8IxlvkQ4a",
-	"WuFEh5TG8e36C1JxG8cIR+/Dnv0wBuVQAicXMDsT4TfPqL//H0S+RRo8JXt0m6MYwa2Bw4rI8qJYm1as",
-	"V8YTn7DJFPr7/mcAAAD//1/o0tgeBQAA",
+	"H4sIAAAAAAAC/8RUzW7bPBB8FWO/7yhZlCw7Dm/9AYq0h1ySQxsYBS2uYwYSyfDHaGDw3QtSUWLVMdwe",
+	"ivpgWzvkzu7MrvbQqE4ridJZoHuwzRY7lv56iyb+aqM0GicwRRuDzCH/zlx84mgbI7QTSgKFDz32zkEG",
+	"+IN1ukWgUJFqnpMyJ9UNmVFSUzKfLi6Wl6SsZvU3yGCjTBfTAWcOcyc6hAzck46XrTNC3kPIQPBjwluL",
+	"ZnL1cURXVjOs54uLHJeX67ys+Cxn9XyR19ViUdblRU0IOST1XvA3+eRGRcb/DW6Awn/Fq1DFs0pFlOgq",
+	"ngsZSNbhiQoTdFjjZ9Y8epx89W926jU/KfFtj/0NicNLRK0fsHGplKHBozlw2B5Xd4Mt6q2SOJG+W6MZ",
+	"FUnmJCeE9F+/Qx8OXBjz4E7I+63yNrUhXMq/UWrNIuUOje3PlVMSu1AaJdMCKMymZDqDDDRz29RGwbQo",
+	"dmVyMgW0sicne5JWIuUzLCJX/AW77SGDjx6te6/4U9oWJR3KlJBp3YomXSsebMw6bFtC2/Z6A/Tu/LxB",
+	"yPaJRhjkQO/gebqSUqsIjo0aFDy8Es1bhRBWSeNXxBmPKWC1kra/XxHyR52crz9yjuW9/hKjIRvbUezT",
+	"+PEQ097jG7aw4XNkyid0z45oZliHLtl7d/oFIuJjHAsYVrkffg6/CpQdNHvmLRJW/0rMDKzvOmaeei0m",
+	"r4ctmt0ghjctUNg6p2lRtKph7VZZR5dkeQlhFX4GAAD//8fG/IMdBgAA",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file

@@ -1,6 +1,6 @@
 get:
   summary: Get user
-  description: aaaaaaaaa
+  description: Get user
   operationId: get_user
   parameters:
     - in: path

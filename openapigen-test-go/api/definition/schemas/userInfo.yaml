@@ -1,0 +1,6 @@
+type: object
+properties:
+  tel:
+    type: string
+    description: Telephone number
+    example: 050-0000-0000

@@ -1,13 +1,23 @@
 post:
-  summary: Create user
-  description: aaaaaaaaa
+  description: Create user
   operationId: create_user
   requestBody:
+    required: true
     content:
       application/json:
         schema:
-          $ref: "../../../openapi.yaml#/components/schemas/User"
-          required: ["name"]
+          allOf:
+            - $ref: "../../../openapi.yaml#/components/schemas/User"
+            - required: ["name", "info"] # require non-nested properties
+            - properties:
+                # structure of `info` is as follows:
+                # ```
+                # info: UserInfo {
+                #   tel: string
+                # }
+                # ```
+                info:
+                  required: ["tel"] # you can also require nested properties
   responses:
     200:
       description: OK

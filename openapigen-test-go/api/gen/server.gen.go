@@ -17,7 +17,7 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// Create user
+
 	// (POST /api/v1/users)
 	CreateUser(ctx echo.Context) error
 	// Get user
@@ -124,7 +124,7 @@ func (response GetUser200JSONResponse) VisitGetUserResponse(w http.ResponseWrite
 
 // StrictServerInterface represents all server handlers.
 type StrictServerInterface interface {
-	// Create user
+
 	// (POST /api/v1/users)
 	CreateUser(ctx context.Context, request CreateUserRequestObject) (CreateUserResponseObject, error)
 	// Get user
