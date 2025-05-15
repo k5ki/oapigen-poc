@@ -1,0 +1,5 @@
+package: api
+generate:
+  models: true
+  embedded-spec: true # For request validation
+output: ./api/gen/model.gen.go

@@ -1,0 +1,15 @@
+openapi: 3.0.3
+info:
+  title: foobar
+  description: |-
+    evinghouse
+  version: "1.0"
+servers:
+  - url: "http://localhost:8089"
+paths:
+  /api/v1/users/{userId}:
+    $ref: "./paths/api/v1/users.yaml"
+components:
+  schemas:
+    User:
+      $ref: "./schemas/user.yaml"

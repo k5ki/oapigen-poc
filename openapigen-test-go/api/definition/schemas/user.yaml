@@ -1,0 +1,21 @@
+type: object
+properties:
+  id:
+    type: string
+    description: User ID
+    format: uuid
+    example: 123e4567-e89b-12d3-a456-426614174000
+  name:
+    type: string
+    description: User name
+    example: Jacque Yue
+  created_at:
+    type: string
+    description: CreatedAt
+    format: date-time
+    example: "2025-01-02T03:04:05.678901234Z"
+  updated_at:
+    type: string
+    description: UpdatedAt
+    format: date-time
+    example: "2025-01-02T03:04:05.678901234Z"
